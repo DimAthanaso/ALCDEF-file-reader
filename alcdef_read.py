@@ -32,14 +32,16 @@ def readfile(myfile):
 		data = {}
 
 		for i in range(startlines[j]+1, endlines[j]):
-			dat = lines[i].split('=')
-			header[dat[0]]=dat[1]
+			if lines[i] != 'EXTENDEDBLOCKS':
+				dat = lines[i].split('=')
+				header[dat[0]]=dat[1]
 
 		tmpray = []
 		for i in range(endlines[j]+1, startlines[j+1]):
-			dat = lines[i].split('=')[1]
-			rows = dat.split('|')
-			tmpray.append(rows)
+			if lines[i] != 'ENDDATA':
+				dat = lines[i].split('=')[1]
+				rows = dat.split('|')
+				tmpray.append(rows)
 
 		tmpray = np.asarray(tmpray).T
 		data["TIME"]  = tmpray[0].astype(float)
